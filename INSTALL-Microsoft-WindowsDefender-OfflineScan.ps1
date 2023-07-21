@@ -26,8 +26,8 @@ $ErrorActionPreference = "SilentlyContinue"
 $logFile = ('{0}\{1}.log' -f "C:\Windows\Logs", [System.IO.Path]::GetFileNameWithoutExtension($MyInvocation.MyCommand.Name))
 
 #Test if registry folder exists
-if ($true -ne (test-Path -Path "HKLM:\SOFTWARE\OS")) {
-    New-Item -Path "HKLM:\SOFTWARE\" -Name "OS" -Force
+if ($true -ne (test-Path -Path "HKLM:\SOFTWARE\COMPANY")) {
+    New-Item -Path "HKLM:\SOFTWARE\" -Name "COMPANY" -Force
 }
 
 if ($install)
@@ -36,7 +36,7 @@ if ($install)
         try
         {   
             #test if key folder exists
-            if ($true -eq (test-Path -Path "HKLM:\SOFTWARE\OS\Microsoft-WindowsDefender-OfflineScan")) {
+            if ($true -eq (test-Path -Path "HKLM:\SOFTWARE\COMPANY\Microsoft-WindowsDefender-OfflineScan")) {
         
              return $true
             }
@@ -44,8 +44,8 @@ if ($install)
             else {
 
             #Register package in registry
-            New-Item -Path "HKLM:\SOFTWARE\OS\" -Name "Microsoft-WindowsDefender-OfflineScan"
-            New-ItemProperty -Path "HKLM:\SOFTWARE\OS\Microsoft-WindowsDefender-OfflineScan" -Name "Version" -PropertyType "String" -Value "1.0.0" -Force
+            New-Item -Path "HKLM:\SOFTWARE\COMPANY\" -Name "Microsoft-WindowsDefender-OfflineScan"
+            New-ItemProperty -Path "HKLM:\SOFTWARE\COMPANY\Microsoft-WindowsDefender-OfflineScan" -Name "Version" -PropertyType "String" -Value "1.0.0" -Force
             
 
             #Start Offline Scan
@@ -69,7 +69,7 @@ if ($uninstall)
         {
 
             #Remove package registration in registry
-            Remove-Item -Path "HKLM:\SOFTWARE\OS\Microsoft-WindowsDefender-OfflineScan" -Recurse -Force 
+            Remove-Item -Path "HKLM:\SOFTWARE\COMPANY\Microsoft-WindowsDefender-OfflineScan" -Recurse -Force 
 
             return $true     
         }
